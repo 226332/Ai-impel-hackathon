@@ -169,7 +169,7 @@ class Solver():
         utils.save_image(tensor2[:, :, :], "./samples/B_output.png")
         utils.save_image(tensor1[:, :, :], "./samples/A_output.png")
     
-    def save_files(self):
+    def save_params(self):
         save(self.g12.state_dict(), "./models_params/g12.pkl")
         save(self.g21.state_dict(), "./models_params/g21.pkl")
         save(self.d1.state_dict(), "./models_params/g1.pkl")
