@@ -5,7 +5,8 @@ from train import Solver
 from test import inference_from_generator
 from data_loader import DataLoaders
 
-logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%H:%M:%S')
+logging.basicConfig(stream=sys.stdout, level=logging.INFO,
+                    format='%(asctime)s %(levelname)s %(filename)s:%(lineno)d %(message)s', datefmt='%H:%M:%S')
 
 
 def create_parser():
