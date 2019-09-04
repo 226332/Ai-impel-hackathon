@@ -12,6 +12,7 @@ import numpy as np
 from torch.autograd import Variable
 from torch import optim
 from model import Generator, Discriminator
+import logging
 
 class Solver():
     def __init__(self, parser, loader1, loader2):
@@ -40,10 +41,10 @@ class Solver():
         return Discriminator(conv_dim=self.conv_dim), Discriminator(conv_dim=self.conv_dim)
 
     def __get_generator_optimizer(self):
-        return optim.Adam([self.g12.parameters(), self.g21.parameters()], self.lr, [0.5, 0.999])
+        return optim.Adam(list(self.g12.parameters()) + list(self.g21.parameters()), self.lr, [0.5, 0.999])
 
     def __get_discriminator_optimizer(self):
-        return optim.Adam([self.d1.parameters(), self.d2.parameters()], self.lr, [0.5, 0.999])
+        return optim.Adam(list(self.d1.parameters()) + list(self.d2.parameters()), self.lr, [0.5, 0.999])
 
     def __make_var(self, tensor):
         tensor = tensor.cuda()
@@ -58,4 +59,5 @@ class Solver():
         self.d_optimizer.zero_grad()
 
     def train(self):
+        logging.info("Train started")
         return 1
