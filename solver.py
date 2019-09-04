@@ -18,10 +18,8 @@ class Solver():
         self.loader1 = loader1
         self.loader2 = loader2
         self.mode = parser.mode
-        self.alpha1 = None
-        self.alpha2 = None
         self.input_size = parser.input_size
-        self.batch_size = parser.input_size
+        self.batch_size = parser.batch_size
         self.train_iter = parser.train_iter
         self.device = torch.device(f"cuda:{parser.gpu}")
         self.conv_dim = parser.conv_dim
@@ -42,10 +40,10 @@ class Solver():
         return Discriminator(conv_dim=self.conv_dim), Discriminator(conv_dim=self.conv_dim)
 
     def __get_generator_optimizer(self):
-        return optim.Adam([self.g12.parameters(), self.g21.parameters()], self.lr, [self.alpha1, self.alpha2])
+        return optim.Adam([self.g12.parameters(), self.g21.parameters()], self.lr, [0.5, 0.999])
 
     def __get_discriminator_optimizer(self):
-        return optim.Adam([self.d1.parameters(), self.d2.parameters()], self.lr, [self.alpha1, self.alpha2])
+        return optim.Adam([self.d1.parameters(), self.d2.parameters()], self.lr, [0.5, 0.999])
 
     def __make_var(self, tensor):
         tensor = tensor.cuda()

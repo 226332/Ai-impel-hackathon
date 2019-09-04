@@ -15,6 +15,7 @@ def create_parser():
     parser.add_argument('--conv_dim', default=32)
     parser.add_argument('--gpu', default=0, choices=[0, 1, 2, 3])
     parser.add_argument('--train_iter', default=100)
+    parser.add_argument('--lr', default=0.001)
     parser.add_argument('--dataset_name', required=True, type=str)
     parser.add_argument('--num_workers', type=int, default=2)
     return parser
