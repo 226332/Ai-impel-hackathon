@@ -56,15 +56,19 @@ class DataLoaders:
 
     def get_extended_dataset(self, vanilla_pics):
         transform = transforms.Compose([
-            transforms.Resize(self.opts.input_size),
+            transforms.Resize((self.opts.input_size, self.opts.input_size)),
             transforms.ToTensor(),
             transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
         ])
         return datasets.ImageFolder(vanilla_pics, transform)
 
     def check_if_save_sample_output(self):
+        sample_path = './samples/'
         output_file_name = 'sample_img.png'
         if self.opts.sample_output:
-            logging.debug(self.a)
             tensor = iter(self.a).next()[0]
-            utils.save_image(tensor[:, :, :], output_file_name)
+            utils.save_image(tensor[:, :, :],
+                             sample_path + 'A' + output_file_name)
+            tensor = iter(self.b).next()[0]
+            utils.save_image(tensor[:, :, :],
+                             sample_path + 'B' + output_file_name)

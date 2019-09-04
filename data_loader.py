@@ -26,7 +26,7 @@ class DataLoaders:
         test_paths = sorted(test_paths)
 
         transform = transforms.Compose([
-            transforms.Scale(self.opts.input_size),
+            transforms.Scale((self.opts.input_size, self.opts.input_size)),
             transforms.ToTensor(),
             transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
         ])

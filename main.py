@@ -10,7 +10,7 @@ logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(asctime)s %
 def create_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument('--mode', default="train", choices=["train", "test"])
-    parser.add_argument('--input_size', default=32, type=int)
+    parser.add_argument('--input_size', default=64, type=int)
     parser.add_argument('--batch_size', default=64, type=int)
     parser.add_argument('--conv_dim', default=32, type=int)
     parser.add_argument('--lr', default=0.001, type=float)

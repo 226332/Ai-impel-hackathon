@@ -11,7 +11,7 @@ import scipy.misc
 import numpy as np
 from torch.autograd import Variable
 from torch import optim
-from model import Generator, Discriminator
+from model import Generator64, Discriminator64
 import logging
 from itertools import count
 from torchvision import utils
@@ -37,10 +37,10 @@ class Solver():
         self.d2.cuda()
 
     def __get_generators(self):
-        return Generator(conv_dim=self.conv_dim), Generator(conv_dim=self.conv_dim)
+        return Generator64(conv_dim=self.conv_dim), Generator64(conv_dim=self.conv_dim)
 
     def __get_discriminators(self):
-        return Discriminator(conv_dim=self.conv_dim), Discriminator(conv_dim=self.conv_dim)
+        return Discriminator64(conv_dim=self.conv_dim), Discriminator64(conv_dim=self.conv_dim)
 
     def __get_generator_optimizer(self):
         return optim.Adam(list(self.g12.parameters()) + list(self.g21.parameters()), self.lr, [0.5, 0.999])
