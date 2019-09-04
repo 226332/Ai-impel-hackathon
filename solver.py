@@ -23,7 +23,7 @@ class Solver():
         self.input_size = parser.input_size
         self.batch_size = parser.input_size
         self.train_iter = parser.train_iter
-        self.device = parser.device(f"cuda:{parser.gpu}")
+        self.device = torch.device(f"cuda:{parser.gpu}")
         self.conv_dim = parser.conv_dim
         self.lr = parser.lr
         self.g12, self.g21 = self.__get_generators()
