@@ -67,6 +67,8 @@ class DataLoaders:
         t.insert(0, transforms.RandomHorizontalFlip(p=1))
         dataset_list.append(datasets.ImageFolder(vanilla_pics, transform))
 
+        t.insert(0, transforms.ColorJitter(0.1, 0.1, 0.1)
+
         return ConcatDataset(dataset_list)
 
     def check_if_save_sample_output(self):

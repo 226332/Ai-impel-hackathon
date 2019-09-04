@@ -10,7 +10,7 @@ import pickle
 import scipy.misc
 import numpy as np
 from torch.autograd import Variable
-from torch import optim
+from torch import optim, save
 from model import Generator128, Discriminator128
 import logging
 from itertools import count
@@ -92,8 +92,8 @@ class Solver():
                     d2_loss = torch.mean((out2 - 1) ** 2)
 
                     d_real_loss = d1_loss + d2_loss
-                    d_real_loss.backward()
-                    self.d_optimizer.step()
+                    # d_real_loss.backward()
+                    # self.d_optimizer.step()
 
                     # Fake images
                     self.__reset_grad()
@@ -107,8 +107,8 @@ class Solver():
                     d2_loss = torch.mean(out1 ** 2)
 
                     d_fake_loss = d1_loss + d2_loss
-                    d_fake_loss.backward()
-                    self.d_optimizer.step()
+                    # d_fake_loss.backward()
+                    # self.d_optimizer.step()
 
                     # Discriminator trained
 
@@ -123,8 +123,8 @@ class Solver():
 
                     g12_loss = torch.mean((out2 - 1) ** 2)
                     g12_loss += 0.05 * torch.mean((batch1 - reconst_batch1) ** 2)  # reconst loss
-                    g12_loss.backward()
-                    self.g_optimizer.step()
+                    # g12_loss.backward()
+                    # self.g_optimizer.step()
 
                     # Generator21
                     self.__reset_grad()
@@ -134,7 +134,12 @@ class Solver():
 
                     g21_loss = torch.mean((out1 - 1) ** 2)
                     g21_loss += 0.05 * torch.mean((batch2 - reconst_batch2) ** 2)
-                    g21_loss.backward()
+                    # g21_loss.backward()
+                    # self.g_optimizer.step()
+                    
+                    d_full_loss = d_fake_loss + d_real_loss + g12_loss + g21_loss
+                    d_full_loss.backward()
+                    self.d_optimizer.step()
                     self.g_optimizer.step()
 
                     # Generators trained
@@ -146,9 +151,10 @@ class Solver():
                             epoch, self.epoch, d_real_loss, d_fake_loss,
                             g12_loss,
                             g21_loss))
-                    self.save_output_tensors()
                     break
         logging.info("Training done")
+        self.save_output_tensors()
+        self.save_params()
         return 1
 
     def save_output_tensors(self):
@@ -162,3 +168,9 @@ class Solver():
         tensor1 = self.g21(batch2)
         utils.save_image(tensor2[:, :, :], "./samples/B_output.png")
         utils.save_image(tensor1[:, :, :], "./samples/A_output.png")
+    
+    def save_files(self):
+        save(self.g12.state_dict(), "./models_params/g12.pkl")
+        save(self.g21.state_dict(), "./models_params/g21.pkl")
+        save(self.d1.state_dict(), "./models_params/g1.pkl")
+        save(self.d2.state_dict(), "./models_params/d2.pkl")
