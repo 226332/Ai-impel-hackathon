@@ -14,7 +14,7 @@ Discriminator - Discriminate between normal images.
 
 import torch.nn as nn
 import torch.nn.functional as F
-
+from torch import sigmoid
 
 def conv(in_channels, out_channels, kernel_size, stride=2, padding=1, bias=False, batch_norm=True):
     """Custom convolution layer followed by batch norm."""
@@ -55,7 +55,7 @@ class Generator(nn.Module):
 
         x = x + F.relu(self.resnet_block(x))  # IN: (Batch, 128, 8, 8)
 
-        x = F.relu(self.conv1(x))  # (Batch, 64, 16, 16)
+        x = F.relu(self.deconv1(x))  # (Batch, 64, 16, 16)
         x = F.tanh(self.deconv2(x))  # (Batch, 3, 32, 32)
         return x
 
@@ -65,7 +65,7 @@ class Discriminator(nn.Module):
 
     def __init__(self, conv_dim=32):
         super(Discriminator, self).__init__()
-        self.conv1 = conv(1, conv_dim, 4)  # Kernel 4x4, Stride 2, Padding 1 conv_div 32
+        self.conv1 = conv(3, conv_dim, 4)  # Kernel 4x4, Stride 2, Padding 1 conv_div 32
         self.conv2 = conv(conv_dim, conv_dim * 2, 4)  # Kernel 4x4, Stride 2, Padding 1 conv_div 64
         self.conv3 = conv(conv_dim * 2, conv_dim * 4, 4)  # Kernel 4x4, Stride 2, Padding 1 conv_div 64
         self.conv4 = conv(conv_dim * 4, 1, 4, 1, 0, False)  # Kernel 4x4, Stride 1, Padding 0 conv_div 1
@@ -74,6 +74,6 @@ class Discriminator(nn.Module):
         x = F.relu(self.conv1(x))  # (Batch, 32, 16, 16)
         x = F.relu(self.conv2(x))  # (Batch, 64, 8, 8)
         x = F.relu(self.conv3(x))  # (Batch, 128, 4, 4)
-        x = F.sigmoid(self.conv4(x).squeeze())
+        x = sigmoid(self.conv4(x).squeeze())
         return x
 
