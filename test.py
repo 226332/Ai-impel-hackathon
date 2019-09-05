@@ -18,17 +18,6 @@ def create_parser():
     return parser
 
 
-def main(config):
-    inference_from_generator(config.img_path, config.gen_path, config.out)
-    return 1
-
-
-if __name__ == "__main__":
-    prepared_parser = create_parser()
-    cfg = prepared_parser.parse_args()
-    main(cfg)
-
-
 def inference_from_generator(path_to_img, path_to_generator, out_path):
     # Data pre-processing
     loader = transforms.Compose([
@@ -64,3 +53,15 @@ def save_image_from_tensor(tensor):
                          os.path.join(path, filename))
 
     save_img_from_tensor(tensor, "kupa.png")
+
+
+def main(config):
+    inference_from_generator(config.img_path, config.gen_path, config.out)
+    return 1
+
+
+if __name__ == "__main__":
+    prepared_parser = create_parser()
+    cfg = prepared_parser.parse_args()
+    main(cfg)
+
