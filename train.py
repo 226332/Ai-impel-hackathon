@@ -147,7 +147,7 @@ class Solver():
                         logging.info("Checkpoint, saved params and photos")
                         self.save_params()
                         self.save_output_tensors()
-                     if epoch % self.decay == 0:
+                    if epoch % self.decay == 0:
                         self.lamb = self.lamb / 2 if self.lamb > 1 else 0.5
                         if self.lr > 1e-5:
                             self.lr = self.lr / 2 if self.lr > 2e-5 else 1e-5
