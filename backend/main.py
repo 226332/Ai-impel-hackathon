@@ -3,7 +3,7 @@ from flask_cors import CORS
 import datetime
 import os
 app = Flask(__name__)
-CORS(app)
+cors = CORS(app, resources={r"/*":{"origins": "*"}})
 PATH_TO_PYTHON_INTERPRETER = 'python'
 PATH_TO_DUPA = f'/root/hackathon/project/models/g12.pkl'
 PATH_TO_DUPA2 = f'/root/hackathon/project/models/g21.pkl'
