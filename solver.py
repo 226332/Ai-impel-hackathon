@@ -25,6 +25,7 @@ class Solver():
         self.loader1 = loader1
         self.loader2 = loader2
         self.mode = parser.mode
+        self.dataset_name = parser.dataset_name
         self.input_size = parser.input_size
         self.batch_size = parser.batch_size
         self.epoch = parser.epoch
@@ -152,8 +153,10 @@ class Solver():
         data2 = iter(self.loader2).next()[0]
 
         parent_dir = 'output'
-        path = os.path.join(parent_dir, f'{self.gpu}_{self.start_time}',
-                            self.current_epoch)
+        path = os.path.join(
+            parent_dir,
+            f'{self.gpu}_{self.dataset_name}_{self.start_time}_epoch_no_{self.epoch}',
+            f'epoch_{self.current_epoch}')
         if not os.path.exists(path):
             os.makedirs(path)
 
@@ -161,20 +164,22 @@ class Solver():
             utils.save_image((tensor[:, :, :] * 0.5) + 0.5,
                              os.path.join(path, filename))
 
-        save_img_from_tensor(data1, "set_a_before.png")
-        save_img_from_tensor(data2, "set_b_before.png")
+        save_img_from_tensor(data1, "set_1_real.png")
+        save_img_from_tensor(data2, "set_2_real.png")
 
-        tensor1 = self.g21(self.__make_var(data1))
-        tensor2 = self.g12(self.__make_var(data2))
+        tensor1 = self.g21(self.__make_var(data2))
+        tensor2 = self.g12(self.__make_var(data1))
 
-        save_img_from_tensor(tensor1, "set_a_after.png")
-        save_img_from_tensor(tensor2, "set_b_after.png")
+        save_img_from_tensor(tensor1, "set_1_fake.png")
+        save_img_from_tensor(tensor2, "set_2_fake.png")
 
     def save_params(self):
         parent_dir = "models_params"
 
-        path = os.path.join(parent_dir, f'{self.gpu}_{self.start_time}',
-                            self.current_epoch)
+        path = os.path.join(
+            parent_dir,
+            f'{self.gpu}_{self.dataset_name}_{self.start_time}_epoch_no_{self.epoch}',
+            f'epoch_{self.current_epoch}')
         if not os.path.exists(path):
             os.makedirs(path)
 
