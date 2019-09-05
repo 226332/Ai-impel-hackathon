@@ -3,17 +3,11 @@ Solver is able to train and test images
 
 *****************************************************************************"""
 import torch
-import torch.nn as nn
-import torchvision
 import os
-import pickle
-import scipy.misc
-import numpy as np
 from torch.autograd import Variable
 from torch import optim, save
 from model import Generator256, Discriminator256
 import logging
-from itertools import count
 from torchvision import utils
 from datetime import datetime
 
