@@ -1,2 +1,7 @@
 # Data
-data/
+datasets/
+__pycache__/
+samples/
+models_params/*
+backup/
+output/
