@@ -136,10 +136,11 @@ class Solver():
                         "Epoch [%d/%d] d1_loss=%.5f d2_loss=%.5f g_loss=%.5f"
                         % (epoch, self.epoch, D_1_loss.data, D_2_loss.data,
                            G_loss.data))
+                    if epoch % 20 == 0:
+                        self.save_params()
                     self.save_output_tensors()
                     break
         logging.info("Training done")
-        self.save_output_tensors()
         self.save_params()
         return 1
 
@@ -147,28 +148,38 @@ class Solver():
         time = datetime.now().strftime("%H:%M:%S")
         data1 = iter(self.loader1).next()[0]
         data2 = iter(self.loader2).next()[0]
-        utils.save_image((data1[:, :, :] * 0.5) + 0.5,
-                         "./samples/B_output_before" + self.gpu + ".png")
-        utils.save_image((data2[:, :, :] * 0.5) + 0.5,
-                         "./samples/A_output_before" + self.gpu + ".png")
-        batch1 = self.__make_var(data1)
-        batch2 = self.__make_var(data2)
-        tensor2 = self.g12(batch1)
-        tensor1 = self.g21(batch2)
-        utils.save_image((tensor2[:, :, :] * 0.5) + 0.5,
-                         "./samples/B_output" + self.gpu + ".png")
-        utils.save_image((tensor1[:, :, :] * 0.5) + 0.5,
-                         "./samples/A_output" + self.gpu + ".png")
+
+        parent_dir = 'samples/output'
+        path = os.path.join(parent_dir, self.gpu, time)
+        if not os.path.exists(path):
+            os.makedirs(path)
+
+        def save_img_from_tensor(tensor, filename):
+            utils.save_image((tensor[:, :, :] * 0.5) + 0.5,
+                             os.path.join(path, filename))
+
+        save_img_from_tensor(data1, "set_a_before.png")
+        save_img_from_tensor(data2, "set_b_before.png")
+
+        tensor1 = self.g21(self.__make_var(data1))
+        tensor2 = self.g12(self.__make_var(data2))
+
+        save_img_from_tensor(tensor1, "set_a_after.png")
+        save_img_from_tensor(tensor2, "set_b_after.png")
 
     def save_params(self):
         time = datetime.now().strftime("%H:%M:%S")
         parent_dir = "models_params"
 
+        path = os.path.join(parent_dir, self.gpu, time)
+        if not os.path.exists(path):
+            os.makedirs(path)
+
         save(self.g12.state_dict(),
-             os.path.join(parent_dir, self.gpu, time, "g12.pkl"))
+             os.path.join(path, "g12.pkl"))
         save(self.g21.state_dict(),
-             os.path.join(parent_dir, self.gpu, time, "g21.pkl"))
+             os.path.join(path, "g21.pkl"))
         save(self.d1.state_dict(),
-             os.path.join(parent_dir, self.gpu, time, "d1.pkl"))
+             os.path.join(path, "d1.pkl"))
         save(self.d2.state_dict(),
-             os.path.join(parent_dir, self.gpu, time, "d2.pkl"))
+             os.path.join(path, "d2.pkl"))

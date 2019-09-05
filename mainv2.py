@@ -16,7 +16,7 @@ def create_parser():
     parser.add_argument('--gpu', default=2, choices=[2, 3], type=int)
     parser.add_argument('--epoch', default=50, type=int)
     parser.add_argument('--dataset_name', default="forests_better", type=str)
-    parser.add_argument('--num_workers', type=int, default=1)
+    parser.add_argument('--num_workers', type=int, default=2)
     parser.add_argument('--sample_output', default=False)
     return parser
 
