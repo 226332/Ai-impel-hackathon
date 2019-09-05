@@ -4,6 +4,7 @@ from typing import Tuple, List
 from torch.utils.data import DataLoader, ConcatDataset
 from torchvision import datasets, transforms, utils
 import itertools
+from datetime import datetime
 
 
 class DataLoaders:
@@ -56,7 +57,8 @@ class DataLoaders:
 
         additional_transforms = [
             transforms.RandomHorizontalFlip(p=1),
-            transforms.ColorJitter(0.1, 0.1, 0.1),
+            # transforms.ColorJitter(0, 0.1, 0.1),
+            transforms.RandomResizedCrop(self.opts.input_size)
             # transforms.RandomCrop(450, padding_mode='edge')
         ]
 
@@ -81,15 +83,17 @@ class DataLoaders:
         output_file_name = 'data_loader_sample'
         output_file_format = '.png'
         if self.opts.sample_output:
-            it = iter(self.a)
-            z = 0
-            for i in it:
-                z += 1
-                tensor = i[0]
-                utils.save_image(tensor[:, :, :],
-                                 sample_path + output_file_name
-                                 + f'_A{z}_' + output_file_format)
-            tensor = iter(self.b).next()[0]
-            utils.save_image(tensor[:, :, :],
-                             sample_path + output_file_name
-                             + '_B_' + output_file_format)
+            time = datetime.now().strftime("%H:%M:%S")
+
+            def save_images_from_data_loader(data_loader, label):
+                it = iter(data_loader)
+                z = 0
+                for tensor in it:
+                    z += 1
+                    utils.save_image(tensor[0][:, :, :],
+                                     sample_path + output_file_name
+                                     + f'_set_{label}_{z}_' + time
+                                     + output_file_format)
+
+            save_images_from_data_loader(self.a, 'A')
+            save_images_from_data_loader(self.b, 'B')

@@ -14,7 +14,7 @@ def create_parser():
     parser.add_argument('--batch_size', default=16, type=int)
     parser.add_argument('--conv_dim', default=64, type=int)
     parser.add_argument('--lr', default=0.002)
-    parser.add_argument('--gpu', default=0, choices=[0, 1, 2, 3])
+    parser.add_argument('--gpu', default=2, choices=[2, 3])
     parser.add_argument('--epoch', default=3, type=int)
     parser.add_argument('--dataset_name', default="emojis", type=str)
     parser.add_argument('--num_workers', type=int, default=2)
