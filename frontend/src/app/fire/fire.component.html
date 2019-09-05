@@ -1,0 +1,34 @@
+<div class="fire"  *ngIf="state.isNormalMode && !state.overFire" style="filter: grayscale(100%)">
+  <div class="fire-left">
+    <div class="main-fire"></div>
+    <div class="particle-fire"></div>
+  </div>
+  <div class="fire-main">
+    <div class="main-fire"></div>
+    <div class="particle-fire"></div>
+  </div>
+  <div class="fire-right">
+    <div class="main-fire"></div>
+    <div class="particle-fire"></div>
+  </div>
+  <div class="fire-bottom">
+    <div class="main-fire"></div>
+  </div>
+</div>
+<div class="fire" *ngIf="(state.isFireMode || state.overFire) || (state.clicked && state.isGreenMode)">
+  <div class="fire-left">
+    <div class="main-fire"></div>
+    <div class="particle-fire"></div>
+  </div>
+  <div class="fire-main">
+    <div class="main-fire"></div>
+    <div class="particle-fire"></div>
+  </div>
+  <div class="fire-right">
+    <div class="main-fire"></div>
+    <div class="particle-fire"></div>
+  </div>
+  <div class="fire-bottom">
+    <div class="main-fire"></div>
+  </div>
+</div>

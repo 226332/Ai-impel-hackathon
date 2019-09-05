@@ -1,0 +1,39 @@
+
+<div style="overflow: hidden;">
+<div class="whiebg">
+  <div class="full bg" style="filter: blur(1px)">
+<!--  <div class="full" style="background-image:url('../../assets/css-purple-clean.png'); background-size: cover;"></div>-->
+
+<div *ngIf="(state.isFireMode || state.overFire) || (state.clicked && state.isGreenMode)" class="full fire"  [@inOutAnimation]></div>
+<!--    <div *ngIf="(state.isFireMode || state.overFire) || (state.clicked && state.isGreenMode)" class="full particles"  [@inOutAnimation]>-->
+<!--      <video width="100%" height="100%" autoplay>-->
+<!--        <source src="../../assets/sparks.mp4" type="video/mp4">-->
+<!--      </video>-->
+<!--      -->
+<!--    </div>-->
+    <div *ngIf="(state.isFireMode || state.overFire) || (state.clicked && state.isGreenMode)" class="full particles"  [@inOutAnimation]>
+      <video #smoke width="100%" autoplay loop>
+        <source src="../../assets/smoke.mp4#t=5" type="video/mp4">
+      </video>
+
+    </div>
+<div *ngIf="((state.isGreenMode || state.overNormal) && !state.clicked ) || (state.clicked && state.isFireMode)" class="full green"  [@inOutAnimation]></div>
+<!--<app-fire ></app-fire>-->
+  <div class="full" id="particles-js"></div>
+</div>
+
+  <figure class="sun" [class.sun-out]="((state.isGreenMode || state.overNormal) && !state.clicked ) || (state.clicked && state.isFireMode)">
+    <img class="out" src="../../assets/sloneczko_out.png" width="100%" height="100%">
+    <img class="in" src="../../assets/sloneczko_in.png" width="100%" height="100%">
+  </figure>
+  <figure class="cloud" [class.cloud-animate-out]="!(((state.isGreenMode || state.overNormal) && !state.clicked ) || (state.clicked && state.isFireMode))" [class.cloud-animate]="((state.isGreenMode || state.overNormal) && !state.clicked ) || (state.clicked && state.isFireMode)">
+    <img src="../../assets/chmurka.png" width="100%" height="100%">
+  </figure>
+<div class="btm" style="pointer-events: none" [class.slideInFromBottom]="((state.isFireMode && !state.clicked)|| state.overFire)">
+  <div class="fire-container" style="display: none">
+<app-fire ></app-fire>
+<app-fire ></app-fire>
+
+
+  </div>
+</div></div>

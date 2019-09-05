@@ -1,0 +1,51 @@
+<section class="all" style="display:flex; flex-direction: column;">
+  <section style="display: flex; flex-direction: row; justify-content: space-evenly">
+    <section [@slideInOut] *ngIf="!this.state.clicked" class="main-panel forest"
+             [class.selected]="state.isGreenMode && d" (pointerover)="state.overNormal=true"
+             (pointerleave)="state.overNormal=false">
+
+      <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)" dropZoneClassName="dp"
+                     contentClassName="dp-content"
+                     (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+        <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+          <div class="fileZone"
+               style="  display:flex; flex-direction: column; height:100%; width:100%; cursor:pointer;justify-content: center"
+               (click)="openFileSelector()">
+            <div *ngIf="state.isGreenMode && d" style="text-align: center">File selected!</div>
+          </div>
+        </ng-template>
+      </ngx-file-drop>
+
+    </section>
+    <section [@slideInOut] *ngIf="!this.state.clicked" class="main-panel fire-forest"
+             [class.selected]="state.isFireMode && d" (pointerover)="state.overFire=true"
+             (pointerleave)="state.overFire=false">
+
+      <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="droppedFire($event)" dropZoneClassName="dp"
+                     contentClassName="dp-content"
+                     (onFileOver)="fileOverFire($event)" (onFileLeave)="fileLeaveFire($event)">
+        <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+          <div class="fileZone"
+               style="  display:flex; flex-direction: column; height:100%; width:100%; cursor:pointer;justify-content: center"
+               (click)="openFileSelector()">
+            <div *ngIf="state.isFireMode && d " style="text-align: center">File selected!</div>
+          </div>
+        </ng-template>
+      </ngx-file-drop>
+    </section>
+  </section>
+  <div style="width:50vw;padding-top:50px;" [@slideInOut2] *ngIf="!this.state.clicked">
+    <button type="button" id="button" class="btn" [class.disabled]="!d" (click)="onBtnClick()">Transform!</button>
+
+  </div>
+  <section class="image-container" [@slideInOut] *ngIf="state.resultReady">
+    <img width="256" height="256" src="https://media.istockphoto.com/photos/businessman-silhouette-as-avatar-or-default-profile-picture-picture-id476085198?k=6&m=476085198&s=612x612&w=0&h=5cDQxXHFzgyz8qYeBQu2gCZq1_TN0z40e_8ayzne0X0=">
+  </section>
+  <div style="width:50vw;padding-top:50px;" [@slideInOut2] *ngIf="state.resultReady">
+  <button type="button" class="btn" (click)="reset()">Reset!</button>
+
+  </div>
+</section>
+<div class="canvasContainer">
+  <canvas #myCanvas id="myCanvas" width="500" height="500"></canvas>
+</div>
