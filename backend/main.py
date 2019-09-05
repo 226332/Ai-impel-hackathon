@@ -4,9 +4,9 @@ import datetime
 import os
 app = Flask(__name__)
 CORS(app)
-PATH_TO_PYTHON_INTERPRETER = 'C:\\Users\\emarkiew\\AppData\\Local\\Programs\\Python\\Python37\\python.exe'
-PATH_TO_DUPA = f'C:\\Users\\emarkiew\\Documents\\Ai-impel-hackathon\models\\g12.pkl'
-PATH_TO_SCRIPT = ''
+PATH_TO_PYTHON_INTERPRETER = 'python'
+PATH_TO_DUPA = f'/root/hackathon/project/models/g12.pkl'
+PATH_TO_SCRIPT = '/root/hackathon/project/test.py'
 @app.route('/')
 def hello_world():
     return 'Hello, World!'

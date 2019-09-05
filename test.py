@@ -39,10 +39,10 @@ def inference_from_generator(path_to_img, path_to_generator, out_path):
     real_A = Variable(real_A.cpu())
     real_A.unsqueeze_(0)
     fake_B = G(real_A)
-    save_image_from_tensor(fake_B)
+    save_image_from_tensor(fake_B, out_path)
 
 
-def save_image_from_tensor(tensor):
+def save_image_from_tensor(tensor, out_path):
     parent_dir = out_path
     path = os.path.join(parent_dir, )
     if not os.path.exists(path):
