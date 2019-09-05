@@ -6,6 +6,7 @@ app = Flask(__name__)
 CORS(app)
 PATH_TO_PYTHON_INTERPRETER = 'C:\\Users\\emarkiew\\AppData\\Local\\Programs\\Python\\Python37\\python.exe'
 PATH_TO_DUPA = f'C:\\Users\\emarkiew\\Documents\\Ai-impel-hackathon\models\\g12.pkl'
+PATH_TO_SCRIPT = ''
 @app.route('/')
 def hello_world():
     return 'Hello, World!'
@@ -19,7 +20,7 @@ def tranform_request():
     file.save(path_to_image)
     ###
     d=os.path.join(os.path.dirname(path_to_image), "/build/img.jpg")
-    x=f'{PATH_TO_PYTHON_INTERPRETER} ../test.py --img_path "{path_to_image}" --gen_path {PATH_TO_DUPA} --out {d}'
+    x=f'{PATH_TO_PYTHON_INTERPRETER} {PATH_TO_SCRIPT} --img_path "{path_to_image}" --gen_path {PATH_TO_DUPA} --out {d}'
     print(x)
     os.system(x)
 
@@ -29,4 +30,4 @@ def tranform_request():
 def send_frontend(path):
     return send_from_directory('build', path)
 
-app.run()
+app.run(host='0.0.0.0')
