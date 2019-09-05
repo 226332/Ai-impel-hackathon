@@ -61,26 +61,30 @@ class DataLoaders:
             transforms.ToTensor(),
             transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
         ]
-        transform = transforms.Compose(t)
-        dataset_list.append(datasets.ImageFolder(vanilla_pics, transform))
 
-        t.insert(0, transforms.RandomHorizontalFlip(p=1))
-        dataset_list.append(datasets.ImageFolder(vanilla_pics, transform))
 
-        t.insert(0, transforms.ColorJitter(0.1, 0.1, 0.1))
-        dataset_list.append(datasets.ImageFolder(vanilla_pics, transform))
+        additional_transforms = [
+            transforms.RandomHorizontalFlip(p=1),
+            transforms.ColorJitter(0.1, 0.1, 0.1),
+            transforms.RandomCrop(self.opts.input_size - 100,
+                                  padding_mode='edge')
+        ]
 
-        t.pop(1)
-        dataset_list.append(datasets.ImageFolder(vanilla_pics, transform))
-
-        t.insert(0, transforms.RandomCrop(self.opts.input_size - 100,
-                 padding_mode='edge'))
-        dataset_list.append(datasets.ImageFolder(vanilla_pics, transform))
-
-        t.pop(1)
-        dataset_list.append(datasets.ImageFolder(vanilla_pics, transform))
+        for transforms_sublist in self.sub_lists(additional_transforms):
+            transforms_combined = transforms_sublist + t
+            transform = transforms.Compose(transforms_combined)
+            dataset_list.append(datasets.ImageFolder(vanilla_pics, transform))
 
         return ConcatDataset(dataset_list)
+
+    @staticmethod
+    def sub_lists(list1):
+        sublist = [[]]
+        for i in range(len(list1) + 1):
+            for j in range(i + 1, len(list1) + 1):
+                sub = list1[i:j]
+                sublist.append(sub)
+        return sublist
 
     def check_if_save_sample_output(self):
         sample_path = './samples/'

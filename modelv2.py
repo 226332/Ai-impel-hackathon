@@ -26,8 +26,10 @@ class ConvBlock(nn.Module):
 
         if self.activation == 'lrelu':
             return self.lrelu(out)
-        elif self.activation == 'no_lrelu':
+        elif self.activation == 'tan':
             return self.tanh(out)
+        elif self.activation == 'no':
+            return out
 
 class DeconvBlock(nn.Module):
     def __init__(self, input_size, output_size, kernel_size=3, stride=2, padding=1, output_padding=1, activation='lrelu', batch_norm=True):
@@ -44,10 +46,7 @@ class DeconvBlock(nn.Module):
         else:
             out = self.deconv(x)
 
-        if self.activation == 'lrelu':
-            return self.lrelu(out)
-        elif self.activation == 'no_lrelu':
-            return out
+        return self.lrelu(out)
 
 class ResnetBlock(nn.Module):
     def __init__(self, num_filter, kernel_size=3, stride=1, padding=0):
@@ -90,14 +89,14 @@ class Generator256(nn.Module):
 
         # residual blocks
         self.resnet_blocks = []
-        for _ in 6:
+        for _ in range(6):
             self.resnet_blocks.append(ResnetBlock(128))
         self.resnet_blocks = nn.Sequential(*self.resnet_blocks)
 
         # decoding blocks
         self.deconv1 = DeconvBlock(128, 64, kernel_size=3, stride=2, padding=1)
         self.deconv1 = DeconvBlock(64, 32, kernel_size=3, stride=2, padding=1)
-        self.deconv3 = DeconvBlock(32, 3, kernel_size=7, stride=1, padding=0, activation='no_lrelu', batch_norm=False)
+        self.deconv3 = ConvBlock(32, 3, kernel_size=7, stride=1, padding=0, activation='tan', batch_norm=False)
 
     def forward(self, x):  
         x = self.conv1(self.pad(x))
@@ -127,11 +126,11 @@ class Discriminator256(nn.Module):
 
     def __init__(self):
         super(Discriminator256, self).__init__()
-        self.conv1 = ConvBlock(3, 64, kernel_size=4, stride=2, padding=1, batch_norm=False)
-        self.conv2 = ConvBlock(64, 128, kernel_size=4, stride=2, padding=1)
-        self.conv3 = ConvBlock(128, 256, kernel_size=4, stride=2, padding=1)
-        self.conv4 = ConvBlock(256, 512, kernel_size=4, stride=1, padding=1)
-        self.conv5 = ConvBlock(512, 1, kernel_size=4, stride=1, padding=1, activation='no_lrelu', batch_norm=False)
+        conv1 = ConvBlock(3, 64, kernel_size=4, stride=2, padding=1, batch_norm=False)
+        conv2 = ConvBlock(64, 128, kernel_size=4, stride=2, padding=1)
+        conv3 = ConvBlock(128, 256, kernel_size=4, stride=2, padding=1)
+        conv4 = ConvBlock(256, 512, kernel_size=4, stride=1, padding=1)
+        conv5 = ConvBlock(512, 1, kernel_size=4, stride=1, padding=1, activation='no', batch_norm=False)
 
         self.conv_blocks = nn.Sequential(
             conv1,
