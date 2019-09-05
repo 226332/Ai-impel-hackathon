@@ -9,7 +9,7 @@ logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(asctime)s %
 
 def create_parser():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--mode', default="train", choices=["train", "test"])
+    parser.add_argument('--mode', default="train", choices=["train", "test", "data"])
     parser.add_argument('--input_size', default=128, type=int)
     parser.add_argument('--batch_size', default=16, type=int)
     parser.add_argument('--conv_dim', default=64, type=int)
@@ -24,9 +24,10 @@ def create_parser():
 def main(config):
     logging.info(f"Program started with given config {vars(config)}")
     dl = DataLoaders(config)
-    loader1, loader2 = dl.a, dl.b
-    solver = Solver(config, loader1, loader2)
-    solver.train()
+    if not config.mode == 'data':
+        loader1, loader2 = dl.a, dl.b
+        solver = Solver(config, loader1, loader2)
+        solver.train()
     return 1
 
 

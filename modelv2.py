@@ -32,12 +32,11 @@ class ConvBlock(nn.Module):
             return out
 
 class DeconvBlock(nn.Module):
-    def __init__(self, input_size, output_size, kernel_size=3, stride=2, padding=1, output_padding=1, activation='lrelu', batch_norm=True):
+    def __init__(self, input_size, output_size, kernel_size=3, stride=2, padding=1, output_padding=1, batch_norm=True):
         super(DeconvBlock, self).__init__()
         self.deconv = nn.ConvTranspose2d(input_size, output_size, kernel_size, stride, padding, output_padding)
         self.batch_norm = batch_norm
         self.bn = nn.InstanceNorm2d(output_size)
-        self.activation = activation
         self.lrelu = nn.LeakyReLU(0.2, True)
 
     def forward(self, x):
@@ -95,7 +94,7 @@ class Generator256(nn.Module):
 
         # decoding blocks
         self.deconv1 = DeconvBlock(128, 64, kernel_size=3, stride=2, padding=1)
-        self.deconv1 = DeconvBlock(64, 32, kernel_size=3, stride=2, padding=1)
+        self.deconv2 = DeconvBlock(64, 32, kernel_size=3, stride=2, padding=1)
         self.deconv3 = ConvBlock(32, 3, kernel_size=7, stride=1, padding=0, activation='tan', batch_norm=False)
 
     def forward(self, x):  

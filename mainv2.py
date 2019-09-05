@@ -2,7 +2,7 @@ import argparse
 import logging
 import sys
 from solverv2 import Solver
-from data_loader import DataLoaders
+from data_loader_better import DataLoaders
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%H:%M:%S')
 
@@ -10,7 +10,7 @@ logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(asctime)s %
 def create_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument('--mode', default="train", choices=["train", "test"])
-    parser.add_argument('--input_size', default=128, type=int)
+    parser.add_argument('--input_size', default=256, type=int)
     parser.add_argument('--batch_size', default=4, type=int)
     parser.add_argument('--conv_dim', default=64, type=int)
     parser.add_argument('--lr', default=0.002)

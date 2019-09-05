@@ -34,10 +34,16 @@ class Solver():
         self.g21.normal_weight_init()
         self.d1.normal_weight_init()
         self.d2.normal_weight_init()
-        self.g12.cuda()
-        self.g21.cuda()
-        self.d1.cuda()
-        self.d2.cuda()
+        device = torch.device("cuda:0")
+        self.g12 = nn.DataParallel(self.g12, device_ids=[0,1,2,3])
+        self.g21 = nn.DataParallel(self.g21, device_ids=[0,1,2,3])
+        self.d1 = nn.DataParallel(self.d1, device_ids=[0,1,2,3])
+        self.d2 = nn.DataParallel(self.d2, device_ids=[0,1,2,3])
+        self.g12.to(device)
+        self.g21.to(device)
+        self.d1.to(device)
+        self.d2.to(device)
+
         self.g_optimizer = self.__get_generator_optimizer()
         self.d1_optimizer = optim.Adam(self.d1.parameters(), self.lr, [0.5, 0.999])
         self.d2_optimizer = optim.Adam(self.d2.parameters(), self.lr, [0.5, 0.999])
@@ -106,7 +112,7 @@ class Solver():
                     D_1_loss = (D_1_real_loss + D_1_fake_loss) * 0.5
                     self.d1.zero_grad()
                     D_1_loss.backward()
-                    self.d1.step()
+                    self.d1_optimizer.step()
 
                     # Train discriminators 2
                     D_2_real_decision = self.d2(batch2)
@@ -118,7 +124,7 @@ class Solver():
                     D_2_loss = (D_2_real_loss + D_2_fake_loss) * 0.5
                     self.d2.zero_grad()
                     D_2_loss.backward()
-                    self.d2.step()
+                    self.d2_optimizer.step()
 
                 except StopIteration:
                     logging.info(
