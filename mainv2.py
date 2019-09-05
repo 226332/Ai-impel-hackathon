@@ -12,7 +12,7 @@ def create_parser():
     parser.add_argument('--mode', default="train", choices=["train", "test"])
     parser.add_argument('--input_size', default=256, type=int)
     parser.add_argument('--batch_size', default=4, type=int)
-    parser.add_argument('--lr', default=0.0005)
+    parser.add_argument('--lr', default=0.0001)
     parser.add_argument('--gpu', default=2, choices=[2, 3], type=int)
     parser.add_argument('--epoch', default=50, type=int)
     parser.add_argument('--dataset_name', default="forests_better", type=str)

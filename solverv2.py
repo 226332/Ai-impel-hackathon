@@ -20,14 +20,15 @@ from datetime import datetime
 
 class Solver():
     def __init__(self, parser, loader1, loader2):
-
+        self.start_time = datetime.now().strftime("%H:%M:%S")
+        self.current_epoch = None
         self.loader1 = loader1
         self.loader2 = loader2
         self.mode = parser.mode
         self.input_size = parser.input_size
         self.batch_size = parser.batch_size
         self.epoch = parser.epoch
-        self.gpu = str(parser.gpu)
+        self.gpu = parser.gpu
         self.device = torch.device(f"cuda:{parser.gpu}")
         torch.cuda.set_device(self.device)
         self.lr = parser.lr
@@ -69,6 +70,7 @@ class Solver():
         L1_loss = torch.nn.L1Loss().cuda()
 
         for epoch in range(1, self.epoch + 1):
+            self.current_epoch = str(epoch)
             data1 = iter(self.loader1)
             data2 = iter(self.loader2)
             while True:
@@ -98,7 +100,8 @@ class Solver():
                     reconst_batch2 = self.g12(fake_batch1)
                     reconst_g21_loss = L1_loss(reconst_batch2, batch2) * 10
 
-                    G_loss = g12_loss + g21_loss + reconst_g12_loss + reconst_g21_loss
+                    G_loss = g12_loss + g21_loss + reconst_g12_loss \
+                             + reconst_g21_loss
                     self.g_optimizer.zero_grad()
                     G_loss.backward()
                     self.g_optimizer.step()
@@ -145,12 +148,12 @@ class Solver():
         return 1
 
     def save_output_tensors(self):
-        time = datetime.now().strftime("%H:%M:%S")
         data1 = iter(self.loader1).next()[0]
         data2 = iter(self.loader2).next()[0]
 
-        parent_dir = 'samples/output'
-        path = os.path.join(parent_dir, self.gpu, time)
+        parent_dir = 'output'
+        path = os.path.join(parent_dir, f'{self.gpu}_{self.start_time}',
+                            self.current_epoch)
         if not os.path.exists(path):
             os.makedirs(path)
 
@@ -168,18 +171,14 @@ class Solver():
         save_img_from_tensor(tensor2, "set_b_after.png")
 
     def save_params(self):
-        time = datetime.now().strftime("%H:%M:%S")
         parent_dir = "models_params"
 
-        path = os.path.join(parent_dir, self.gpu, time)
+        path = os.path.join(parent_dir, f'{self.gpu}_{self.start_time}',
+                            self.current_epoch)
         if not os.path.exists(path):
             os.makedirs(path)
 
-        save(self.g12.state_dict(),
-             os.path.join(path, "g12.pkl"))
-        save(self.g21.state_dict(),
-             os.path.join(path, "g21.pkl"))
-        save(self.d1.state_dict(),
-             os.path.join(path, "d1.pkl"))
-        save(self.d2.state_dict(),
-             os.path.join(path, "d2.pkl"))
+        save(self.g12.state_dict(), os.path.join(path, "g12.pkl"))
+        save(self.g21.state_dict(), os.path.join(path, "g21.pkl"))
+        save(self.d1.state_dict(), os.path.join(path, "d1.pkl"))
+        save(self.d2.state_dict(), os.path.join(path, "d2.pkl"))
