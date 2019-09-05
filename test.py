@@ -13,7 +13,7 @@ def create_parser():
                         type=str)
     parser.add_argument('--gen_path', required=True,
                         type=str)
-    parser.add_argument('--out', default='tested',
+    parser.add_argument('--out', default='tested/kupa.png',
                         type=str)
     return parser
 
@@ -43,14 +43,8 @@ def inference_from_generator(path_to_img, path_to_generator, out_path):
 
 
 def save_image_from_tensor(tensor, out_path):
-    parent_dir = out_path
-    path = os.path.join(parent_dir, )
-    if not os.path.exists(path):
-        os.makedirs(path)
-
-    def save_img_from_tensor(tensor, filename):
-        utils.save_image((tensor[:, :, :] * 0.5) + 0.5,
-                         os.path.join(path, filename))
+    utils.save_image((tensor[:, :, :] * 0.5) + 0.5,
+                         out_path)
 
     save_img_from_tensor(tensor, "kupa.png")
 
