@@ -35,7 +35,7 @@ export class BackgroundComponent implements OnInit {
   get d(){
     return this.state.getD();
   }
-  constructor(private state:StateService) { }
+  constructor(public state:StateService) { }
 
   ngOnInit() {
     particlesJS.load('particles-js', 'assets/particlesjs-config.json', () => {
