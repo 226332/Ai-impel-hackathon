@@ -46,8 +46,6 @@ def save_image_from_tensor(tensor, out_path):
     utils.save_image((tensor[:, :, :] * 0.5) + 0.5,
                          out_path)
 
-    save_img_from_tensor(tensor, "kupa.png")
-
 
 def main(config):
     inference_from_generator(config.img_path, config.gen_path, config.out)
