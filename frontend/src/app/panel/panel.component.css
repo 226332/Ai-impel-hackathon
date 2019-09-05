@@ -1,0 +1,119 @@
+.all{
+  top: 50%;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.forest{
+  background: rgba(0, 130, 16, 0.03);
+  box-shadow: 0px 12px 15px -14px rgba(0, 143, 0, 0.75) !important;
+}
+.fire-forest{
+  background: rgba(130, 0, 6, 0.03);
+  box-shadow: 0px 12px 15px -14px rgba(145, 0, 0, 0.75) !important;
+}
+.main-panel{
+  width:20vw;
+  height:10vh;
+  backdrop-filter: blur(2px);
+  /*background: rgba(0,0,0,0.25);*/
+  box-shadow: 0px 12px 15px -14px rgba(0,0,0,0.75);
+  border:1px solid rgba(0,0,0,0.04);
+  border-radius: 12px;
+
+  color:rgba(0,0,0,0.7);
+
+  font-family: 'Monda', sans-serif;
+  transition: all .5s ease-in-out;
+
+
+  /*font-family: 'Comfortaa', cursive;*/
+
+}
+.image-container{
+
+  backdrop-filter: blur(2px);
+  /*background: rgba(0,0,0,0.25);*/
+  box-shadow: 0px 4px 22px 3px rgba(0,0,0,0.75);
+  border:2px solid rgba(255,255,255,0.04);
+  border-radius:12px;
+  overflow:hidden;
+  color:rgba(0,0,0,0.7);
+  width: 256px;
+  margin:auto;
+  font-family: 'Monda', sans-serif;
+  transition: all .5s ease-in-out;
+
+
+  /*font-family: 'Comfortaa', cursive;*/
+
+}
+.main-panel:hover:not(.selected){
+  transform:scale(1.1,1.0);
+}
+.selected{
+  transform:scale(1.1,1.0);
+}
+.inner{
+  margin-left:4%;
+  margin-right:4%;
+
+}
+
+#myCanvas{
+
+}
+.canvasContainer{
+  pointer-events: none;
+  position: absolute;
+  top:0px;
+  left:0px;
+  mix-blend-mode:multiply;
+}
+.btn {
+
+  box-shadow: 0px 12px 15px -14px rgba(0,0,0,0.75);
+  font-family: 'Monda', sans-serif;
+  font-size: 1em;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  width: 100%;
+  backdrop-filter: blur(2px);
+  display:block;
+  margin:auto;
+  border-radius: 10px;
+  color: rgba(0,0,0,0.8);
+  /*text-shadow: -1px -1px 1px rgba(0,0,0,0.8);*/
+  background:transparent;
+  border:1px solid rgba(0,0,0,0.1);
+  /*border-bottom-color: rgba(0,0,0,0.35);*/
+  /*background: hsla(260, 100%, 50%, 1);*/
+  cursor: pointer;
+  outline: 0 !important;
+
+  /*animation: pulse 1s infinite alternate;*/
+  transition: background 0.4s, border 0.2s, margin 0.2s;
+
+}
+.btn:hover {
+
+  margin-top: -1px;
+
+  animation: none;
+}
+.btn:active {
+  border-bottom-width: 0;
+  margin-top: 5px;
+}
+@keyframes pulse {
+  0% {
+    margin-top: 0px;
+  }
+  100% {
+    margin-top: 6px;
+  }
+}
+.disabled{
+  pointer-events: none;
+  opacity: 0.2;
+}

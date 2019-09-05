@@ -1,0 +1,114 @@
+.full{
+  position: absolute;
+  left:0;
+  top:0;
+  overflow:hidden;
+  background-size:cover;
+  width:100vw;
+  height:100vh;
+}
+.bg{
+
+  background-image: linear-gradient(to right top, #fdfdfd, #fefefe, #fefefe, #ffffff, #ffffff);
+  /*background-image: linear-gradient(to right top, #051937, #142c71, #4839a9, #8e37da, #e000ff);*/
+
+  background-color: rgb(24, 32, 48);
+
+
+
+  box-shadow: inset 0 0 100px rgba(0,0,0,.2);
+
+}
+
+.fire{
+  background-image: linear-gradient(to right top, #600000, #820006, #a60008, #ca0006, #f00000);
+  box-shadow: inset 0 0 100px rgba(0,0,0,.7);
+}
+.green{
+  background-image: linear-gradient(to right top, #daff8e, #e4ffa1, #ecffb4, #f3ffc8, #f9ffdb);
+  /*background-image: linear-gradient(to right top, #28c506, #75d335, #a5e258, #cdf07b, #f0ffa0);*/
+  /*box-shadow: inset 0 0 100px rgba(0,0,0,.4);*/
+}
+.btm{
+  position: absolute;
+  bottom:-140px;
+  width: 100%;
+  overflow: visible;
+  transition: 3s ease-out;
+}
+.fire-container{
+  display:flex;
+  width:100%;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.slideInFromBottom{
+  bottom:-20px;
+}
+
+
+.sun{
+  position: absolute;
+  top:-20vw;
+  width:20vw;
+  height: 20vw;
+  left:-20vw;
+  transition: 2s;
+
+}
+.sun-out{
+  left:-2vw;
+  top:-2vw;
+}
+.sun img{
+  position: absolute;
+}
+.sun .out {
+  animation:spin 35s linear infinite;
+}
+.sun .in {
+  animation:spinSmile 2s ease-in-out infinite alternate;
+}
+.cloud {
+  position:absolute;
+  width:17vw;
+  top:7vw;
+  /*filter:blur(5px);*/
+  height:14vw;
+  left:-22vw;
+  /*animation: pulse 2s ease-in-out infinite alternate;*/
+  transition: 50s left ease-out;
+}
+.cloud-animate{
+  left:100vw;
+}
+.cloud-animate-out{
+  transition: 3s left ease-in!important;
+}
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+@keyframes spinSmile {
+  0% { transform:rotate(-8deg); }
+  100% { transform:rotate(8deg); }
+}
+@keyframes move {
+  0% {
+     left:-25vw;
+  }
+  100% {
+    left:100vw;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1,1);
+  }
+  100% {
+    transform: scale(1.5,1.5);
+  }
+}
+
+
+.particles{
+mix-blend-mode: screen;
+}
