@@ -146,7 +146,7 @@ export class PanelComponent implements OnInit {
     setTimeout(() => {
       this.state.clicked = true;
     }, 500);
-    let result = await this.http.post(`/xd?type=${this.state.isFireMode?'fire':'green'}`, formData).toPromise();
+    let result = await this.http.post(`http://aipg-ra-gpu-49.ra.intel.com:5012/xd?type=${this.state.isFireMode?'fire':'green'}`, formData).toPromise();
     console.log(result)
     setTimeout ( ()=>{
       this.state.resultReady=true;
