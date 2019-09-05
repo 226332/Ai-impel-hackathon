@@ -4,18 +4,18 @@ import sys
 from solver import Solver
 from data_loader import DataLoaders
 
-logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(asctime)s %(levelname)s %(filename)s:%(lineno)d %(message)s', datefmt='%H:%M:%S')
+logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%H:%M:%S')
 
 
 def create_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument('--mode', default="train", choices=["train", "test"])
-    parser.add_argument('--input_size', default=64, type=int)
-    parser.add_argument('--batch_size', default=64, type=int)
-    parser.add_argument('--conv_dim', default=32, type=int)
-    parser.add_argument('--lr', default=0.001, type=float)
-    parser.add_argument('--gpu', default=0, choices=[0, 1, 2, 3], type=int)
-    parser.add_argument('--epoch', default=10, type=int)
+    parser.add_argument('--input_size', default=128, type=int)
+    parser.add_argument('--batch_size', default=16, type=int)
+    parser.add_argument('--conv_dim', default=64, type=int)
+    parser.add_argument('--lr', default=0.002)
+    parser.add_argument('--gpu', default=0, choices=[0, 1, 2, 3])
+    parser.add_argument('--epoch', default=3, type=int)
     parser.add_argument('--dataset_name', default="emojis", type=str)
     parser.add_argument('--num_workers', type=int, default=2)
     parser.add_argument('--sample_output', default=False)

@@ -67,7 +67,18 @@ class DataLoaders:
         t.insert(0, transforms.RandomHorizontalFlip(p=1))
         dataset_list.append(datasets.ImageFolder(vanilla_pics, transform))
 
-        t.insert(0, transforms.ColorJitter(0.1, 0.1, 0.1)
+        t.insert(0, transforms.ColorJitter(0.1, 0.1, 0.1))
+        dataset_list.append(datasets.ImageFolder(vanilla_pics, transform))
+
+        t.pop(1)
+        dataset_list.append(datasets.ImageFolder(vanilla_pics, transform))
+
+        t.insert(0, transforms.RandomCrop(self.opts.input_size - 100,
+                 padding_mode='edge'))
+        dataset_list.append(datasets.ImageFolder(vanilla_pics, transform))
+
+        t.pop(1)
+        dataset_list.append(datasets.ImageFolder(vanilla_pics, transform))
 
         return ConcatDataset(dataset_list)
 
