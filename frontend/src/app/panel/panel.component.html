@@ -39,13 +39,12 @@
 
   </div>
   <section class="image-container" [@slideInOut] *ngIf="state.resultReady">
-    <img width="256" height="256" src="img.jpg">
+    <img width="256" height="256" src="{{path}}" *ngIf="env">
+    <img width="256" height="256" src="http://aipg-ra-gpu-49.ra.intel.com:5012/{{path}}" *ngIf="!env">
   </section>
   <div style="width:50vw;padding-top:50px;" [@slideInOut2] *ngIf="state.resultReady">
   <button type="button" class="btn" (click)="reset()">Reset!</button>
 
   </div>
 </section>
-<div class="canvasContainer">
-  <canvas #myCanvas id="myCanvas" width="500" height="500"></canvas>
-</div>
+

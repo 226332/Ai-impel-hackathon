@@ -20,12 +20,13 @@ def tranform_request():
     path_to_image = os.path.join(os.path.dirname(os.path.realpath(__file__)), f"focia{datetime.datetime.now().timestamp()}.jpg")
     file.save(path_to_image)
     ###
-    d=os.path.join(os.path.join(os.path.dirname(os.path.realpath(__file__)), "build"), "img.jpg")
+    filename  =  f"focia{datetime.datetime.now().timestamp()}.jpg"
+    d=os.path.join(os.path.join(os.path.dirname(os.path.realpath(__file__)), "build"), filename)
     x=f'{PATH_TO_PYTHON_INTERPRETER} {PATH_TO_SCRIPT} --img_path "{path_to_image}" --gen_path {model_path} --out {d}'
     print(x)
     os.system(x)
 
-    return jsonify({"ok":"ok"})
+    return jsonify({"ok":"ok", "filename":filename})
 
 @app.route('/<path:path>')
 def send_frontend(path):

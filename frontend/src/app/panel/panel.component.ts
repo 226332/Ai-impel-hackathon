@@ -4,6 +4,7 @@ import {StateService} from '../state.service';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {HttpClient} from '@angular/common/http';
 import {BACKEND_URL} from '../constants';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-panel',
@@ -34,10 +35,12 @@ export class PanelComponent implements OnInit {
   get d() {
     return this.files.length > 0 || this.filesFire.length>0;
   }
-
+  path:string;
+  env
   @ViewChild('myCanvas', {static: true}) myCanvas: any;
 
   constructor(public state: StateService, private http:HttpClient) {
+    this.env = environment.production
     state.getD = () => {
       return this.d;
     };
@@ -146,8 +149,9 @@ export class PanelComponent implements OnInit {
     setTimeout(() => {
       this.state.clicked = true;
     }, 500);
-    let result = await this.http.post(`http://aipg-ra-gpu-49.ra.intel.com:5012/xd?type=${this.state.isFireMode?'fire':'green'}`, formData).toPromise();
+    let result:any = await this.http.post(`http://aipg-ra-gpu-49.ra.intel.com:5012/xd?type=${this.state.isFireMode?'fire':'green'}`, formData).toPromise();
     console.log(result)
+    this.path = result.filename;
     setTimeout ( ()=>{
       this.state.resultReady=true;
     }, 500)
