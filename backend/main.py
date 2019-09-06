@@ -10,7 +10,7 @@ PATH_TO_DUPA2 = f'/root/hackathon/project/models/g21.pkl'
 PATH_TO_SCRIPT = '/root/hackathon/project/test.py'
 @app.route('/')
 def hello_world():
-    return 'Hello, World!'
+    return redirect('/index.html')
 
 @app.route('/xd', methods=['GET', 'POST'])
 def tranform_request():
