@@ -35,12 +35,12 @@
     </section>
   </section>
   <div style="width:50vw;padding-top:50px;" [@slideInOut2] *ngIf="!this.state.clicked">
-    <button type="button" id="button" class="btn" [class.disabled]="!d" (click)="onBtnClick()"><span *ngIf="state.isNormalMode">...</span><span *ngIf="state.isGreenMode">Ignite!</span><span *ngIf="state.isFireMode">Stifle!</span></button>
+    <button type="button" id="button" class="btn" [class.disabled]="!d" (click)="onBtnClick()"><span *ngIf="state.isNormalMode">Upload Image First</span><span *ngIf="state.isGreenMode">Ignite!</span><span *ngIf="state.isFireMode">Stifle!</span></button>
 
   </div>
   <section class="image-container" [@slideInOut] *ngIf="state.resultReady">
-    <img width="256" height="256" src="{{path}}" *ngIf="env">
-    <img width="256" height="256" src="http://aipg-ra-gpu-49.ra.intel.com:5012/{{path}}" *ngIf="!env">
+    <img width="310" height="310" src="{{path}}" *ngIf="env">
+    <img width="310" height="310" src="http://aipg-ra-gpu-49.ra.intel.com:5012/{{path}}" *ngIf="!env">
   </section>
   <div style="width:50vw;padding-top:50px;" [@slideInOut2] *ngIf="state.resultReady">
   <button type="button" class="btn" (click)="reset()">Reset!</button>

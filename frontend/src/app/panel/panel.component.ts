@@ -60,6 +60,8 @@ export class PanelComponent implements OnInit {
   reset(){
     this.state.setToNormalState()
     this.state.clicked=false;
+    this.files=[]
+    this.filesFire=[]
     this.state.resultReady=false;
 
   }

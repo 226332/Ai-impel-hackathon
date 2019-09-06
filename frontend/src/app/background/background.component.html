@@ -29,8 +29,8 @@
   <figure class="cloud" [class.cloud-animate-out]="!(((state.isGreenMode || state.overNormal) && !state.clicked ) || (state.clicked && state.isFireMode))" [class.cloud-animate]="((state.isGreenMode || state.overNormal) && !state.clicked ) || (state.clicked && state.isFireMode)">
     <img src="../../assets/chmurka.png" width="100%" height="100%">
   </figure>
-<div class="btm" style="pointer-events: none" [class.slideInFromBottom]="((state.isFireMode && !state.clicked)|| state.overFire)">
-  <div class="fire-container" style="display: none">
+<div class="btm" style="pointer-events: none" [class.slideInFromBottom]="(state.overFire) || (state.isGreenMode)">
+  <div class="fire-container">
 <app-fire ></app-fire>
 <app-fire ></app-fire>
 
