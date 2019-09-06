@@ -15,7 +15,7 @@ def hello_world():
 @app.route('/xd', methods=['GET', 'POST'])
 def tranform_request():
     mode = request.args.get("type")
-    model_path = PATH_TO_DUPA if mode == 'green' else PATH_TO_DUPA2
+    model_path = PATH_TO_DUPA if mode == 'fire' else PATH_TO_DUPA2
     file = request.files['file']
     path_to_image = os.path.join(os.path.dirname(os.path.realpath(__file__)), f"focia{datetime.datetime.now().timestamp()}.jpg")
     file.save(path_to_image)

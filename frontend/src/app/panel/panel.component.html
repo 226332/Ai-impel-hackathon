@@ -35,7 +35,7 @@
     </section>
   </section>
   <div style="width:50vw;padding-top:50px;" [@slideInOut2] *ngIf="!this.state.clicked">
-    <button type="button" id="button" class="btn" [class.disabled]="!d" (click)="onBtnClick()">Transform!</button>
+    <button type="button" id="button" class="btn" [class.disabled]="!d" (click)="onBtnClick()"><span *ngIf="state.isNormalMode">...</span><span *ngIf="state.isGreenMode">Ignite!</span><span *ngIf="state.isFireMode">Stifle!</span></button>
 
   </div>
   <section class="image-container" [@slideInOut] *ngIf="state.resultReady">
