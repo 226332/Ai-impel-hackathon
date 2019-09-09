@@ -1,6 +1,5 @@
 """*****************************************************************************
 Solver is able to train and test images
-
 *****************************************************************************"""
 import torch
 import os
@@ -17,8 +16,7 @@ class Solver():
         self.start_time = datetime.now().strftime("%H:%M:%S")
         self.current_epoch = None
         self.loader1 = loader1
-        self.loader2 = loader2
-        self.mode = parser.mode
+        self.loader2 = loader2  
         self.dataset_name = parser.dataset_name
         self.input_size = parser.input_size
         self.batch_size = parser.batch_size
@@ -104,7 +102,9 @@ class Solver():
                     G_loss.backward()
                     self.g_optimizer.step()
 
-                    # Train discriminators 1
+                    # Train discriminators
+
+                    # discriminator1
                     D_1_real_decision = self.d1(batch1)
                     D_1_real_loss = MSE_loss(D_1_real_decision, Variable(
                         torch.ones(D_1_real_decision.size()).cuda()))
@@ -118,7 +118,7 @@ class Solver():
                     D_1_loss.backward()
                     self.d1_optimizer.step()
 
-                    # Train discriminators 2
+                    # discriminator2
                     D_2_real_decision = self.d2(batch2)
                     D_2_real_loss = MSE_loss(D_2_real_decision, Variable(
                         torch.ones(D_2_real_decision.size()).cuda()))

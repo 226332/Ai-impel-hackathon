@@ -40,7 +40,7 @@ export class PanelComponent implements OnInit {
   @ViewChild('myCanvas', {static: true}) myCanvas: any;
 
   constructor(public state: StateService, private http:HttpClient) {
-    this.env = environment.production
+    this.env = environment.production;
     state.getD = () => {
       return this.d;
     };
@@ -151,7 +151,7 @@ export class PanelComponent implements OnInit {
     setTimeout(() => {
       this.state.clicked = true;
     }, 500);
-    let result:any = await this.http.post(`http://aipg-ra-gpu-49.ra.intel.com:5012/xd?type=${this.state.isFireMode?'fire':'green'}`, formData).toPromise();
+    let result:any = await this.http.post(`http://localhost:5000/inference?type=${this.state.isFireMode?'fire':'green'}`, formData).toPromise();
     console.log(result)
     this.path = result.filename;
     setTimeout ( ()=>{

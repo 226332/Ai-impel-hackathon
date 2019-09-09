@@ -4,18 +4,18 @@ import datetime
 import os
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*":{"origins": "*"}})
-PATH_TO_PYTHON_INTERPRETER = 'python'
-PATH_TO_DUPA = f'/root/hackathon/project/models/g12.pkl'
-PATH_TO_DUPA2 = f'/root/hackathon/project/models/g21.pkl'
-PATH_TO_SCRIPT = '/root/hackathon/project/test.py'
+PATH_TO_PYTHON_INTERPRETER = 'python3'
+PATH_TO_GENERATOR_FIRE = f'./models/g12.pkl'
+PATH_TO_GENERATOR_FLORA = f'./models//g21.pkl'
+PATH_TO_SCRIPT = f',/test.py'
 @app.route('/')
 def hello_world():
     return redirect('/index.html')
 
-@app.route('/xd', methods=['GET', 'POST'])
+@app.route('/inference', methods=['GET', 'POST'])
 def tranform_request():
     mode = request.args.get("type")
-    model_path = PATH_TO_DUPA if mode == 'fire' else PATH_TO_DUPA2
+    model_path = PATH_TO_GENERATOR_FIRE if mode == 'fire' else PATH_TO_GENERATOR_FLORA
     file = request.files['file']
     path_to_image = os.path.join(os.path.dirname(os.path.realpath(__file__)), f"focia{datetime.datetime.now().timestamp()}.jpg")
     file.save(path_to_image)
@@ -26,10 +26,6 @@ def tranform_request():
     print(x)
     os.system(x)
 
-    return jsonify({"ok":"ok", "filename":filename})
-
-@app.route('/<path:path>')
-def send_frontend(path):
-    return send_from_directory('build', path)
+    return jsonify({"filename":filename})
 
 app.run(host='0.0.0.0')

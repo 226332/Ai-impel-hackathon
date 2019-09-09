@@ -20,16 +20,16 @@ class ConvBlock(nn.Module):
 
     def forward(self, x):
         if self.batch_norm:
-            out = self.bn(self.conv(x))
+            x = self.bn(self.conv(x))
         else:
-            out = self.conv(x)
+            x = self.conv(x)
 
         if self.activation == 'lrelu':
-            return self.lrelu(out)
+            return self.lrelu(x)
         elif self.activation == 'tan':
-            return self.tanh(out)
+            return self.tanh(x)
         elif self.activation == 'no':
-            return out
+            return x
 
 class DeconvBlock(nn.Module):
     def __init__(self, input_size, output_size, kernel_size=3, stride=2, padding=1, output_padding=1, batch_norm=True):
@@ -41,11 +41,11 @@ class DeconvBlock(nn.Module):
 
     def forward(self, x):
         if self.batch_norm:
-            out = self.bn(self.deconv(x))
+            x = self.bn(self.deconv(x))
         else:
-            out = self.deconv(x)
+            x = self.deconv(x)
 
-        return self.lrelu(out)
+        return self.lrelu(x)
 
 class ResnetBlock(nn.Module):
     def __init__(self, num_filter, kernel_size=3, stride=1, padding=0):
@@ -68,8 +68,7 @@ class ResnetBlock(nn.Module):
         )
 
     def forward(self, x):
-        out = x + self.resnet_block(x)
-        return out
+        return x + self.resnet_block(x)
 
 
 
@@ -121,7 +120,7 @@ class Generator256(nn.Module):
 
 
 class Discriminator256(nn.Module):
-    """Discriminator"""
+    """Discriminator for 256x256 pictures"""
 
     def __init__(self):
         super(Discriminator256, self).__init__()

@@ -1,0 +1,1 @@
+Directory with datasets subdirectories. Assumes correct structure of the data.

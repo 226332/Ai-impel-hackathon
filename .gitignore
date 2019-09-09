@@ -1,8 +1,3 @@
-# Data
-__pycache__/
-samples/
+# Checkpoints
 models_params/*
-backup/
-output/
-backend/*.jpg
-backend/build/*.jpg
+venv/
