@@ -1,7 +1,8 @@
 # Data
-datasets/
 __pycache__/
 samples/
 models_params/*
 backup/
 output/
+backend/*.jpg
+backend/build/*.jpg

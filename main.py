@@ -17,7 +17,7 @@ def create_parser():
     parser.add_argument('--lr', default=2e-4, type=float)
     parser.add_argument('--gpu', default=2, choices=[2, 3], type=int)
     parser.add_argument('--epoch', default=50, type=int)
-    parser.add_argument('--dataset_name', default="forests_better", type=str)
+    parser.add_argument('--dataset_name', default="forests_final", type=str)
     parser.add_argument('--num_workers', default=2, type=int)
     parser.add_argument('--sample_output', default=False)
     parser.add_argument('--decay', default=20, type=int)
