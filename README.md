@@ -10,7 +10,7 @@ and wait untill the browser will be opened.
 * [Python3](https://www.python.org/)
 * [PyTorch](https://pytorch.org/)
 * [Flask](https://pypi.org/project/Flask/)
-* [NodeJS]()	
+* [NodeJS](https://nodejs.org/en/)	
 * [Angular](https://angular.io/)
 
 #### Notes
@@ -19,6 +19,8 @@ Cuda is required for training, but CPU is enough for the project App to run (inf
 
 #### Results
 
+![](results/images/0/1_real.png)
+![](results/images/0/1_fake.png)
 
 
 ##### Made by 
