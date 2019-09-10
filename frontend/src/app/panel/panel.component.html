@@ -40,7 +40,7 @@
   </div>
   <section class="image-container" [@slideInOut] *ngIf="state.resultReady">
     <img width="310" height="310" src="{{path}}" *ngIf="env">
-    <img width="310" height="310" src="http://aipg-ra-gpu-49.ra.intel.com:5012/{{path}}" *ngIf="!env">
+    <img width="310" height="310" src="http://localhost:5000/{{path}}" *ngIf="!env">
   </section>
   <div style="width:50vw;padding-top:50px;" [@slideInOut2] *ngIf="state.resultReady">
   <button type="button" class="btn" (click)="reset()">Reset!</button>

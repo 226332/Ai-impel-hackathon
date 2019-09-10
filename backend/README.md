@@ -1,1 +1,0 @@
-Directory with the backend for the app.
